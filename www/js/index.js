@@ -34,7 +34,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		pushNotification = window.plugins.pushNotification;
+		//pushNotification = window.plugins.pushNotification;
 		navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
     },
 	onSuccess: function(position){ 
@@ -51,6 +51,7 @@ var app = {
 	onError: function(error){  
 		alert('code: '    + error.code    + '\n' +   'message: ' + error.message + '\n');
 	},
+    // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
@@ -61,26 +62,6 @@ var app = {
         console.log('Received Event: ' + id);
 		
 		alert('receivedEvent '+device.platform);
-		$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
-		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
-			pushNotification.register(
-			app.successHandler,
-			app.errorHandler,
-			{
-				"senderID":"854409438626",
-				"ecb":"app.onNotificationGCM"
-			});
-		}else {
-			pushNotification.register(
-			tokenHandler,
-			errorHandler,
-			{
-				"badge":"true",
-				"sound":"true",
-				"alert":"true",
-				"ecb":"onNotificationAPN"
-			});
-		}
     }
 };
 // notif event

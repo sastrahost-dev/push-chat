@@ -65,26 +65,13 @@ var app = {
 		$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
 		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
 			pushNotification.register(
-			successHandler,
-			errorHandler,
+			app.successHandler,
+			app.errorHandler,
 			{
 				"senderID":"854409438626",
-				"ecb":"onNotification"
+				"ecb":"app.onNotificationGCM"
 			});
-		} else if ( device.platform == 'blackberry10'){
-			pushNotification.register(
-			successHandler,
-			errorHandler,
-			{
-				invokeTargetId : "replace_with_invoke_target_id",
-				appId: "replace_with_app_id",
-				ppgUrl:"replace_with_ppg_url", //remove for BES pushes
-				ecb: "pushNotificationHandler",
-				simChangeCallback: replace_with_simChange_callback,
-				pushTransportReadyCallback: replace_with_pushTransportReady_callback,
-				launchApplicationOnPush: true
-			});
-		} else {
+		}else {
 			pushNotification.register(
 			tokenHandler,
 			errorHandler,
@@ -95,13 +82,38 @@ var app = {
 				"ecb":"onNotificationAPN"
 			});
 		}
-		function successHandler (result) {
-			alert('result = ' + result);
-		}
-		// result contains any error description text returned from the plugin call
-		function errorHandler (error) {
-			alert('error = ' + error);
-		}
+    },
+	// result contains any message sent from the plugin call
+	successHandler: function(result) {
+		alert('Callback Success! Result = '+result)
+	},
+	errorHandler:function(error) {
+		alert(error);
+	},
+	onNotificationGCM: function(e) {
+        switch( e.event )
+        {
+            case 'registered':
+                if ( e.regid.length > 0 )
+                {
+                    console.log("Regid " + e.regid);
+                    alert('registration id = '+e.regid);
+                }
+            break;
+ 
+            case 'message':
+              // this is the actual push notification. its format depends on the data model from the push server
+              alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+            break;
+ 
+            case 'error':
+              alert('GCM error = '+e.msg);
+            break;
+ 
+            default:
+              alert('An unknown GCM event has occurred');
+              break;
+        }
     }
 };
 // notif event

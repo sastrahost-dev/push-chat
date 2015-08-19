@@ -109,12 +109,11 @@ $(document)
 	})
 	$('#cek').click(function()
 	{
-		var rootUrl = 'http://www.sastrahost.com/mutasi-bank/';
 		var origin = rootUrl + 'cekApp.php';
 		var dataString = 'token=true';
 		$.ajax({
 		type: "POST",
-		url: origin,
+		url: '',
 		data: dataString,
 		cache: false,
 		beforeSend: function(){ $("#cek").text('Connecting...');},

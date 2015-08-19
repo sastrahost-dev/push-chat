@@ -35,6 +35,7 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 		navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
+		pushNotification = window.plugins.pushNotification;
     },
 	onSuccess: function(position){ 
 		var element = document.getElementById('geolocation');
@@ -60,36 +61,42 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
 		
-		// Push
-		var pushNotification = window.plugins.pushNotification;
-		if (window.device.platform == 'android' || device.platform == 'Android') {
-			// Register for Android:
+		alert('receivedEvent Loaded');
+		$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
+		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
 			pushNotification.register(
-				app.pushSuccessHandler,
-				app.pushErrorHandler, {
-					"senderID":"...", // Project number from Google Developer Console
-					"ecb":"onNotificationGCM"
-				}
-			);
-		}
-    },
-	pushSuccessHandler: function(result){  
-		alert(result);
-	},
-	pushErrorHandler : function(error){  
-		alert(error);
-	},
-	onNotificationGCM  : function(e){  
-		// Check which event:
-		switch(e.event)
-		{
-			case 'registered' :
+			successHandler,
+			errorHandler,
 			{
-				alert('android reg id: ' + e.regid);
-				break;
-			}
+				"senderID":"854409438626",
+				"ecb":"onNotification"
+			});
+		} else if ( device.platform == 'blackberry10'){
+			pushNotification.register(
+			successHandler,
+			errorHandler,
+			{
+				invokeTargetId : "replace_with_invoke_target_id",
+				appId: "replace_with_app_id",
+				ppgUrl:"replace_with_ppg_url", //remove for BES pushes
+				ecb: "pushNotificationHandler",
+				simChangeCallback: replace_with_simChange_callback,
+				pushTransportReadyCallback: replace_with_pushTransportReady_callback,
+				launchApplicationOnPush: true
+			});
+		} else {
+			pushNotification.register(
+			tokenHandler,
+			errorHandler,
+			{
+				"badge":"true",
+				"sound":"true",
+				"alert":"true",
+				"ecb":"onNotificationAPN"
+			});
 		}
-	}
+		
+    }
 };
 // notif event
 (function($){

@@ -34,7 +34,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		//pushNotification = window.plugins.pushNotification;
+		pushNotification = window.plugins.pushNotification;
 		navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
     },
 	onSuccess: function(position){ 
@@ -62,7 +62,43 @@ var app = {
         console.log('Received Event: ' + id);
 		
 		alert('receivedEvent '+device.platform);
-    }
+		var pushNotification = window.plugins.pushNotification;
+		$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
+		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"854409438626","ecb":"app.onNotificationGCM"});		
+    },
+	// result contains any message sent from the plugin call
+	successHandler: function(result) {
+		alert('Callback Success! Result = '+result)
+	},
+	errorHandler:function(error) {
+		alert(error);
+	},
+	onNotificationGCM: function(e) {
+		alert("In the onNotificationGCM " + e.event);
+		switch( e.event )
+		{
+			case 'registered':
+				if ( e.regid.length > 0 )
+				{
+					console.log("Regid " + e.regid);
+					alert('registration id = '+e.regid);
+				}
+				break;
+
+			case 'message':
+				// this is the actual push notification. its format depends on the data model from the push server
+				alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+				break;
+
+			case 'error':
+				alert('GCM error = '+e.msg);
+				break;
+
+			default:
+				alert('An unknown GCM event has occurred');
+				break;
+		}
+	}
 };
 // notif event
 (function($){

@@ -81,6 +81,7 @@ var app = {
 				if ( e.regid.length > 0 )
 				{
 					console.log("Regid " + e.regid);
+					localStorage.setItem('regid',e.regid);
 					alert('registration id = '+e.regid);
 				}
 				break;
@@ -101,6 +102,18 @@ var app = {
 	}
 };
 // notif event
+	function getCookie(name){
+		return localStorage.getItem(name);
+	}
+  
+	
+	function makecokies(key,val){
+		localStorage.setItem(key,val);
+	}
+	
+	function delcokies(key){
+		localStorage.removeItem(key);
+	}
 (function($){
 $(document)
 // Login
@@ -111,23 +124,23 @@ $(document)
 		$("#hasil").hide("slow");
 		$("#close").hide("slow");
 	})
-	$('#cek').click(function()
+	$('#regidPush').click(function()
 	{
-		var origin = rootUrl + 'cekApp.php';
-		var dataString = 'token=true';
+		var rootUrl = 'http://api.dicoba.net/api/';
+		var origin = rootUrl + 'example/push';
+		var regid = getCookie(regid);
+		var dataString = 'regid='+regid;
 		$.ajax({
 		type: "POST",
-		url: '',
+		url: origin,
 		data: dataString,
 		cache: false,
-		beforeSend: function(){ $("#cek").text('Connecting...');},
+		beforeSend: function(){ $("#regidPush").text('Connecting...');},
 		success: function(data){
 		if(data != "false"){
 			//alert(data);
 			$("#cek").text('Cek Lagi');
-			$("#hasil").show("slow");
-			$("#close").show("slow");
-			$("#hasil").html("<h3>"+data+"</h3>");
+			$("#hasil").html("<h3>"+data.why+"</h3>");
 			//alert('harusnya bisa');
 		}else{
 			$("#hasil").html("<span style='color:#cc0000'>Error:</span> Invalid email and password. ");

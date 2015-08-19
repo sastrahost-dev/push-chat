@@ -92,7 +92,7 @@ var app = {
 			console.log("Sound: " + event.notification.Sound);
 			console.log("Badge: " + event.notification.Badge);
 			console.log("Param1: " + event.notification.Param1);
-			alert(event.notification.Param1);
+			alert(event.notification.Alert);
 		});
     }
 };

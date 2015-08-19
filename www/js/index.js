@@ -85,7 +85,11 @@ var app = {
 		} else {
 			Console.log("Not supported platform");
 		}
-		
+		var watchId = Puship.Common.WatchPosition({
+			callMinutes: 5,
+			enableHighAccuracy: true,
+			minimumAccuracy: 50, //Excludes positions with accuracy > 50 meters
+		});
 		Puship.Common.OnPushReceived(function(event) {
 			console.log("Push received");
 			console.log("Message: " + event.notification.Alert);

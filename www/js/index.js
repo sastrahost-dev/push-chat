@@ -74,7 +74,7 @@ var app = {
 		alert(error);
 	},
 	onNotificationGCM: function(e) {
-		alert("In the onNotificationGCM " + e.event);
+		//alert("In the onNotificationGCM " + e.event);
 		switch( e.event )
 		{
 			case 'registered':

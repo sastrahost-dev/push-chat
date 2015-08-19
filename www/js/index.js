@@ -85,6 +85,15 @@ var app = {
 		} else {
 			Console.log("Not supported platform");
 		}
+		
+		Puship.Common.OnPushReceived(function(event) {
+			console.log("Push received");
+			console.log("Message: " + event.notification.Alert);
+			console.log("Sound: " + event.notification.Sound);
+			console.log("Badge: " + event.notification.Badge);
+			console.log("Param1: " + event.notification.Param1);
+			alert(event.notification.Param1);
+		});
     }
 };
 // notif event

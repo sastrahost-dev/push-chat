@@ -95,7 +95,13 @@ var app = {
 				"ecb":"onNotificationAPN"
 			});
 		}
-		
+		function successHandler (result) {
+			alert('result = ' + result);
+		}
+		// result contains any error description text returned from the plugin call
+		function errorHandler (error) {
+			alert('error = ' + error);
+		}
     }
 };
 // notif event

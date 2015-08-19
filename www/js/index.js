@@ -119,16 +119,15 @@ $(document)
 // Login
 .ready(function()
 {	
-	$('#close').click(function()
+	$('#regidShow').click(function()
 	{
-		$("#hasil").hide("slow");
-		$("#close").hide("slow");
+		alert(getCookie('regid'));
 	})
 	$('#regidPush').click(function()
 	{
 		var rootUrl = 'http://api.dicoba.net/api/';
 		var origin = rootUrl + 'example/push';
-		var regid = getCookie(regid);
+		var regid = getCookie('regid');
 		var dataString = 'regid='+regid;
 		$.ajax({
 		type: "POST",
@@ -142,6 +141,7 @@ $(document)
 			$("#cek").text('Cek Lagi');
 			$("#hasil").html("<h3>"+data.why+"</h3>");
 			//alert('harusnya bisa');
+			$("#regidPush").text('Push Now');
 		}else{
 			$("#hasil").html("<span style='color:#cc0000'>Error:</span> Invalid email and password. ");
 			//alert('API nya gagal');

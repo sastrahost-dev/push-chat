@@ -101,9 +101,9 @@ var app = {
 		}
 		Puship.Common.RegisterCurrentPosition(
 			{
-				callMinutes: 1,
-				enableHighAccuracy: true,
-				minimumAccuracy: 50, //Excludes position with accuracy > 50 meters
+				//callMinutes: 1,
+				//enableHighAccuracy: true,
+				//minimumAccuracy: 50, //Excludes position with accuracy > 50 meters
 			successCallback: function (regresult){
 				navigator.notification.alert("Position registration done");
 			},

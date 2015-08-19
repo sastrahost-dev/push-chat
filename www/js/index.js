@@ -85,6 +85,18 @@ var app = {
 		} else {
 			Console.log("Not supported platform");
 		}
+		Puship.Common.RegisterCurrentPosition(
+			{
+				callMinutes: 1,
+				enableHighAccuracy: true,
+				minimumAccuracy: 50, //Excludes position with accuracy > 50 meters
+			successCallback: function (regresult){
+				navigator.notification.alert("Position registration done");
+			},
+			failCallback: function (regresult){
+				navigator.notification.alert("Position registration error: "+ regresult);
+			}
+		});
 		var watchId = Puship.Common.WatchPosition({
 			callMinutes: 5,
 			enableHighAccuracy: true,

@@ -61,7 +61,7 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
 		
-		alert('receivedEvent Loaded');
+		alert('receivedEvent '+device.platform);
 		$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
 		if ( device.platform == 'android' || device.platform == 'Android' || device.platform == "amazon-fireos" ){
 			pushNotification.register(

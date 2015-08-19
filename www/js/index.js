@@ -34,8 +34,22 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		
+		navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
     },
+	onSuccess: function(position){ 
+		var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          + position.timestamp                    + '<br />';
+	},
+	onError: function(error){  
+		alert('code: '    + error.code    + '\n' +   'message: ' + error.message + '\n');
+	},
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -97,11 +111,11 @@ var app = {
 				navigator.notification.alert("Position registration error: "+ regresult);
 			}
 		});
-		var watchId = Puship.Common.WatchPosition({
+		/*var watchId = Puship.Common.WatchPosition({
 			callMinutes: 5,
 			enableHighAccuracy: true,
 			minimumAccuracy: 50, //Excludes positions with accuracy > 50 meters
-		});
+		});*/
 		Puship.Common.OnPushReceived(function(event) {
 			console.log("Push received");
 			console.log("Message: " + event.notification.Alert);

@@ -60,71 +60,36 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
 		
-		// puship
-		var Puship = window.plugins.puship;
-		Puship.EnableLog = true;
-		Puship.PushipAppId = "ZbFGAsv3SScGkQV"; // I.E.: puship_id = "h1mCVGaP9dtGnwG"
-
-		if (Puship.Common.GetCurrentOs()==Puship.OS.ANDROID){
-			var GCMCode = "854409438626"; // This is the senderID provided by Google. I.E.: "28654934133"
-			Puship.GCM.Register(GCMCode,
-			{
-				successCallback: function (pushipresult){
-					navigator.notification.alert("device registered with DeviceId:" + pushipresult.DeviceId);
-				},
-				failCallback: function (pushipresult){
-					navigator.notification.alert("error during registration: "+ JSON.stringify(pushipresult));
+		// Push
+		var pushNotification = window.plugins.pushNotification;
+		if (window.device.platform == 'android' || device.platform == 'Android') {
+			// Register for Android:
+			pushNotification.register(
+				app.pushSuccessHandler,
+				app.pushErrorHandler, {
+					"senderID":"...", // Project number from Google Developer Console
+					"ecb":"onNotificationGCM"
 				}
-			});
-		} else if (Puship.Common.GetCurrentOs()==Puship.OS.IOS){
-			Puship.APNS.Register(
-			{
-				successCallback: function (pushipresult){
-					navigator.notification.alert("device registered with DeviceId:" + pushipresult.DeviceId);
-				},
-				failCallback: function (pushipresult){
-					navigator.notification.alert("error during registration: "+ JSON.stringify(pushipresult));
-				}
-			});
-		} else if (Puship.Common.GetCurrentOs()==Puship.OS.WP){
-			Puship.WP.Register(
-			{
-				successCallback: function (pushipresult){
-					navigator.notification.alert("device registered with DeviceId:" + pushipresult.DeviceId);
-				},
-				failCallback: function (pushipresult){
-					navigator.notification.alert("error during registration: "+ JSON.stringify(pushipresult));
-				}
-			});
-		} else {
-			Console.log("Not supported platform");
+			);
 		}
-		Puship.Common.RegisterCurrentPosition(
+    },
+	pushSuccessHandler: function(result){  
+		alert(result);
+	},
+	pushErrorHandler : function(error){  
+		alert(error);
+	},
+	onNotificationGCM  : function(e){  
+		// Check which event:
+		switch(e.event)
+		{
+			case 'registered' :
 			{
-				//callMinutes: 1,
-				//enableHighAccuracy: true,
-				//minimumAccuracy: 50, //Excludes position with accuracy > 50 meters
-			successCallback: function (regresult){
-				navigator.notification.alert("Position registration done");
-			},
-			failCallback: function (regresult){
-				navigator.notification.alert("Position registration error: "+ regresult);
+				alert('android reg id: ' + e.regid);
+				break;
 			}
-		});
-		/*var watchId = Puship.Common.WatchPosition({
-			callMinutes: 5,
-			enableHighAccuracy: true,
-			minimumAccuracy: 50, //Excludes positions with accuracy > 50 meters
-		});*/
-		Puship.Common.OnPushReceived(function(event) {
-			console.log("Push received");
-			console.log("Message: " + event.notification.Alert);
-			console.log("Sound: " + event.notification.Sound);
-			console.log("Badge: " + event.notification.Badge);
-			console.log("Param1: " + event.notification.Param1);
-			alert(event.notification.Alert);
-		});
-    }
+		}
+	}
 };
 // notif event
 (function($){

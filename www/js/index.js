@@ -153,7 +153,7 @@ $(document)
 */
 .ready(function()
 {
-	//var messagesRef = new Firebase('https://sizzling-fire-2271.firebaseio.com/');
+	var messagesRef = new Firebase('https://sizzling-fire-2271.firebaseio.com/');
 	$('#clearMsg').on('click',function (e) {	
 		var ok = confirm("Yakin dihapus?");
 		if(ok == true){			
@@ -194,7 +194,7 @@ $(document)
 		}
     })
 	 // Add a callback that is triggered for each chat message.
-	/* messagesRef.on('child_added', function (snapshot) {
+	messagesRef.on('child_added', function (snapshot) {
 		var message = snapshot.val();
 		if(message.name === getCookie('name')){
 			var green = 'bubble--alt';
@@ -204,7 +204,7 @@ $(document)
 		makecokies('idLawan',message.idlawan);
 		var resultMSG = '<p class="bubble '+green+'">'+message.text+'</p>';
 		$('#messagesDiv').append(resultMSG).animate({scrollTop: $(document).height()},"slow");	 
-	}) */
+	})
   
 	$('#registerName').click(function(e){
 		e.stopPropagation();
@@ -227,7 +227,7 @@ $(document)
 		var rootUrl = 'http://api.dicoba.net/api/';
 		var origin = rootUrl + 'example/push';
 		var regid = getCookie('regid');
-		var dataString = 'regid='+regid;
+		var dataString = 'id='+regid;
 		$.ajax({
 		type: "POST",
 		url: origin,

@@ -56,7 +56,6 @@ var app = {
 			case 'registered':
 				if ( e.regid.length > 0 )
 				{
-					console.log("Regid " + e.regid);
 					localStorage.setItem('regid',e.regid);
 					alert('registration id = '+e.regid);
 				}
@@ -81,7 +80,8 @@ var app = {
 	function registerID(id,name){
 		var rootUrl = 'http://api.dicoba.net/api/';
 		var origin = rootUrl + 'example/uuidReg';
-		var dataString = 'name='+name+'&regid='+id;
+		var regid = getCookie('regid');
+		var dataString = 'name='+name+'&regid='+regid;
 		$.ajax({
 			type: "POST",
 			url: origin,
@@ -161,6 +161,9 @@ $(document)
 			$('#messagesDiv').html('');
 			messagesRef.remove();
 		}		
+	})
+	$('#getregid').on('click',function (e) {	
+		alert(getCookie('regid'));
 	})
 	$('#sendMsg').on('click',function (e) {		
 		if($.trim($('#messageInput').val()).length>0){

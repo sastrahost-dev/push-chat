@@ -188,6 +188,7 @@ $(document)
 	
 	$('#messageInput').keypress(function (e) {
 		if(e.which == 13 && $.trim($('#messageInput').val()).length>0){
+			SoftKeyboard.show();
 			var name = getCookie('name');
 			var text = $('#messageInput').val();
 			var idLawan = getCookie('idLawan');

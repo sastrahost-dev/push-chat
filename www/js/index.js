@@ -35,16 +35,40 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 		pushNotification = window.plugins.pushNotification;
+		navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
     },
+	onSuccess: function(position){ 
+		var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          + position.timestamp                    + '<br />';
+	},
+	onError: function(error){  
+		alert('code: '    + error.code    + '\n' +   'message: ' + error.message + '\n');
+	},
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-		//alert('receivedEvent '+device.platform);
+        var parentElement = document.getElementById(id);
+        var listeningElement = parentElement.querySelector('.listening');
+        var receivedElement = parentElement.querySelector('.received');
+
+        listeningElement.setAttribute('style', 'display:none;');
+        receivedElement.setAttribute('style', 'display:block;');
+        console.log('Received Event: ' + id);
+		
+		alert('receivedEvent '+device.platform);
 		var pushNotification = window.plugins.pushNotification;
+		$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
 		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"854409438626","ecb":"app.onNotificationGCM"});		
     },
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {
-		alert('Tunggu hingga ada pemberitahuan berhasil = '+result)
+		alert('Callback Success! Result = '+result)
 	},
 	errorHandler:function(error) {
 		alert(error);
@@ -56,13 +80,15 @@ var app = {
 			case 'registered':
 				if ( e.regid.length > 0 )
 				{
+					console.log("Regid " + e.regid);
 					localStorage.setItem('regid',e.regid);
-					alert('Berhasil!! registration id = '+e.regid);
+					alert('registration id = '+e.regid);
 				}
 				break;
+
 			case 'message':
 				// this is the actual push notification. its format depends on the data model from the push server
-				alert('message = '+e.message+' Dari = '+e.msgcnt);
+				alert('message = '+e.message+' msgcnt = '+e.msgcnt);
 				break;
 
 			case 'error':
@@ -76,51 +102,6 @@ var app = {
 	}
 };
 // notif event
-	function registerID(id,name){
-		var rootUrl = 'http://api.dicoba.net/api/';
-		var origin = rootUrl + 'example/uuidReg';
-		var regid = getCookie('regid');
-		var dataString = 'name='+name+'&regid='+regid;
-		$.ajax({
-			type: "POST",
-			url: origin,
-			data: dataString,
-			cache: false,
-			beforeSend: function(){ },
-			success: function(data){
-			if(data != "false"){
-				
-			}else{
-			
-			}
-		  },
-		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			alert(textStatus);
-		  }
-		});
-	}
-	function pushNotif(id,name,msg){
-		var rootUrl = 'http://api.dicoba.net/api/';
-		var origin = rootUrl + 'example/push';
-		var dataString = 'id='+id+'&name='+name+'&msg='+msg;
-		$.ajax({
-			type: "POST",
-			url: origin,
-			data: dataString,
-			cache: false,
-			beforeSend: function(){ },
-			success: function(data){
-			if(data != "false"){
-				
-			}else{
-			
-			}
-		  },
-		  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			alert(textStatus);
-		  }
-		});
-	}
 	function getCookie(name){
 		return localStorage.getItem(name);
 	}
@@ -133,91 +114,11 @@ var app = {
 	function delcokies(key){
 		localStorage.removeItem(key);
 	}
-	
-	function pindahPage(link){	
-		$.mobile.changePage( link, { 
-			transition: "fade", 
-			changeHash: true,
-			reloadPage:false			
-		});			
-	}
-	
 (function($){
 $(document)
-// Login	
-/* .on('submit', '#register' ,function(e) {
-}) 
-.on('pageinit', function () { 
-
-})
-*/
+// Login
 .ready(function()
-{
-	var messagesRef = new Firebase('https://sizzling-fire-2271.firebaseio.com/');
-	$('#clearMsg').on('click',function (e) {	
-		var ok = confirm("Yakin dihapus?");
-		if(ok == true){			
-			$('#messagesDiv').html('');
-			messagesRef.remove();
-		}		
-	})
-	$('#getregid').on('click',function (e) {	
-		alert(getCookie('regid'));
-	})
-	$('#sendMsg').on('click',function (e) {		
-		if($.trim($('#messageInput').val()).length>0){
-			var name = getCookie('name');
-			var text = $('#messageInput').val();
-			messagesRef.push({name:name, text:text});
-			$('#messageInput').val('');	
-			$('html, body').animate({ 
-			   scrollTop: $(document).height()-$(window).height()}, 
-			   500
-			);
-			pushNotif(getCookie('regid'),name,text);
-		}
-    })
-	
-	$('#messageInput').keypress(function (e) {
-		if(e.which == 13 && $.trim($('#messageInput').val()).length>0){
-			var name = getCookie('name');
-			var text = $('#messageInput').val();
-			var idLawan = getCookie('idLawan');
-			messagesRef.push({name:name, text:text,idlawan:idLawan});
-			$('#messageInput').val('');	
-			$('html, body').animate({ 
-			   scrollTop: $(document).height()-$(window).height()}, 
-			   500
-			);			
-			pushNotif(getCookie('regid'),name,text);
-			return false;
-		}
-    })
-	 // Add a callback that is triggered for each chat message.
-	messagesRef.on('child_added', function (snapshot) {
-		var message = snapshot.val();
-		if(message.name === getCookie('name')){
-			var green = 'bubble--alt';
-		}else{
-			var green = '';
-		}
-		makecokies('idLawan',message.idlawan);
-		var resultMSG = '<p class="bubble '+green+'">'+message.text+'</p>';
-		$('#messagesDiv').append(resultMSG).animate({scrollTop: $(document).height()},"slow");	 
-	})
-  
-	$('#registerName').click(function(e){
-		e.stopPropagation();
-		e.preventDefault();
-		if($.trim($('#name').val()).length>0){
-			var name = $('#name').val();	
-			makecokies('name',name);
-			registerID(getCookie('regid'),name);
-			pindahPage("#chat");
-		}else{
-			alert('Isi nama lo!');
-		}
-	})
+{	
 	$('#regidShow').click(function()
 	{
 		alert(getCookie('regid'));
@@ -227,7 +128,7 @@ $(document)
 		var rootUrl = 'http://api.dicoba.net/api/';
 		var origin = rootUrl + 'example/push';
 		var regid = getCookie('regid');
-		var dataString = 'id='+regid;
+		var dataString = 'regid='+regid;
 		$.ajax({
 		type: "POST",
 		url: origin,

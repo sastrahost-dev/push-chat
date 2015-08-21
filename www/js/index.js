@@ -38,13 +38,13 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-		alert('receivedEvent '+device.platform);
+		//alert('receivedEvent '+device.platform);
 		var pushNotification = window.plugins.pushNotification;
 		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"854409438626","ecb":"app.onNotificationGCM"});		
     },
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {
-		alert('Callback Success! Result = '+result)
+		alert('Tunggu hingga ada pemberitahuan berhasil = '+result)
 	},
 	errorHandler:function(error) {
 		alert(error);
@@ -57,7 +57,7 @@ var app = {
 				if ( e.regid.length > 0 )
 				{
 					localStorage.setItem('regid',e.regid);
-					alert('registration id = '+e.regid);
+					alert('Berhasil!! registration id = '+e.regid);
 				}
 				break;
 

@@ -188,7 +188,6 @@ $(document)
 	
 	$('#messageInput').keypress(function (e) {
 		if(e.which == 13 && $.trim($('#messageInput').val()).length>0){
-			SoftKeyboard.show();
 			var name = getCookie('name');
 			var text = $('#messageInput').val();
 			var idLawan = getCookie('idLawan');
@@ -204,6 +203,7 @@ $(document)
     })
 	 // Add a callback that is triggered for each chat message.
 	messagesRef.on('child_added', function (snapshot) {
+		 $("#messageInput").focus();
 		var message = snapshot.val();
 		if(message.name === getCookie('name')){
 			var green = 'bubble--alt';

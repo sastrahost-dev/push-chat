@@ -35,35 +35,11 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 		pushNotification = window.plugins.pushNotification;
-		navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
     },
-	onSuccess: function(position){ 
-		var element = document.getElementById('geolocation');
-        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
-                            'Longitude: '          + position.coords.longitude             + '<br />' +
-                            'Altitude: '           + position.coords.altitude              + '<br />' +
-                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
-                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
-                            'Heading: '            + position.coords.heading               + '<br />' +
-                            'Speed: '              + position.coords.speed                 + '<br />' +
-                            'Timestamp: '          + position.timestamp                    + '<br />';
-	},
-	onError: function(error){  
-		alert('code: '    + error.code    + '\n' +   'message: ' + error.message + '\n');
-	},
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-        console.log('Received Event: ' + id);
-		
 		alert('receivedEvent '+device.platform);
 		var pushNotification = window.plugins.pushNotification;
-		$("#app-status-ul").append('<li>registering ' + device.platform + '</li>');
 		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"854409438626","ecb":"app.onNotificationGCM"});		
     },
 	// result contains any message sent from the plugin call

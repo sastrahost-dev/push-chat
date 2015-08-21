@@ -2,13 +2,9 @@
 <html>
     <head>
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-6">
-    <META HTTP-EQUIV="Content-language" CONTENT="ar">	
-		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
         <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-		<script src="js/jquery.mobile-1.4.5.min.js"></script>
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/PushNotification.js"></script>
-		<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link rel="stylesheet" href="css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css" />
@@ -22,10 +18,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scaleable=no">
     </head>
     <body id="login-view">
-		<div data-role="page" id="index">
-		  <div data-role="header" id="header">	
-		  </div>
-
 		  <div data-role="content" class="ui-content" id="login-area">
 			<div class="box">
 				<div class="border-over">
@@ -45,31 +37,6 @@
 				<br>
 			</div>
 		  </div>
-		  
-		  <div class="footer" data-role="footer" id="footer" data-position="fixed" data-tap-toggle="true">
-			
-		  </div>
 		</div> 
-		<!-- dialog CONFIRMATION -->
-		<div data-role="page" id="chat">
-		  <div data-role="header" id="header">
-			<div class="header text-center">
-				<h4><a href="#index" class="changename" >Ganti Nama</a>
-				Chat <a id="clearMsg" class="clearmsg" >Clear Chat</a></h4>
-			</div>
-		  </div>
-		  <br />
-		  <div data-role="content" class="ui-content" id="confirmation-area">
-				<div id='messagesDiv' class="lastChat"></div>
-				<br />
-		  </div>
-		  
-		  <div class="footer" data-role="footer" id="footer" data-position="fixed" data-tap-toggle="true">
-			<div class="input-group">
-			  	<input type='text' id='messageInput' data-role="none" class="width100" placeholder='Message...'>
-				<span class="input-group-addon" id="sendMsg">Send</span>
-			</div>
-		  </div>
-		</div> 
-    </body>
+	</body>
 </html>

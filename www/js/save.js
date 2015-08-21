@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -39,14 +39,6 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 		//alert('receivedEvent '+device.platform);
-		if(PushbotsPlugin.isAndroid()){
-			PushbotsPlugin.initializeAndroid("55d73997177959a41f8b4569", "854409438626");
-		}
-		function myMsgClickHandler(msg){
-			console.log("Clicked On notification" + JSON.stringify(msg));
-			alert(JSON.stringify(msg));
-		}
-		PushbotsPlugin.onNotificationClick(myMsgClickHandler);
 		var pushNotification = window.plugins.pushNotification;
 		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"854409438626","ecb":"app.onNotificationGCM"});		
     },

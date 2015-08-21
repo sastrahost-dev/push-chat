@@ -60,7 +60,6 @@ var app = {
 					alert('Berhasil!! registration id = '+e.regid);
 				}
 				break;
-
 			case 'message':
 				// this is the actual push notification. its format depends on the data model from the push server
 				alert('message = '+e.message+' Dari = '+e.msgcnt);

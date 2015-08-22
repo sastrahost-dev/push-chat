@@ -9,7 +9,7 @@
     <name>Push Chat</name>
 
     <description>
-		push testing puship
+		push testing sastrahost
     </description>
 
     <author href="http://phonegap.com" email="support@phonegap.com">
@@ -64,8 +64,6 @@
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
 	<gap:plugin name="com.phonegap.plugins.pushplugin" version="2.5.0" />
-	<gap:plugin name="com.pushbots.push" version="1.2.3" source="plugins.cordova.io" />
-	<gap:plugin name="de.phonostar.softkeyboard-custom" version="0.1.1" />
 
 
     <!-- Third party plugins -->

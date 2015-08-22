@@ -40,7 +40,15 @@ var app = {
 		//alert('receivedEvent '+device.platform);
 		var pushNotification = window.plugins.pushNotification;
 		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"1094004461627","ecb":"app.onNotificationGCM"});		
-    },
+		var parentElement = document.getElementById(id);
+		var listeningElement = parentElement.querySelector('.listening');
+		var receivedElement = parentElement.querySelector('.received');
+
+		listeningElement.setAttribute('style', 'display:none;');
+		receivedElement.setAttribute('style', 'display:block;');
+
+		console.log('Received Event: ' + id);
+	},
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {
 		alert('Tunggu hingga ada pemberitahuan berhasil '+result)
@@ -49,14 +57,19 @@ var app = {
 		alert(error);
 	},
 	onNotificationGCM: function(e) {
-		//alert("In the onNotificationGCM " + e.event);
+		alert("In the onNotificationGCM " + e.event);
 		switch( e.event )
 		{
 			case 'registered':
 				if ( e.regid.length > 0 )
 				{
 					localStorage.setItem('regid',e.regid);
-					alert('Berhasil!! registration id = '+e.regid);
+					navigator.notification.alert(
+						'You are the winner!',  // message
+						alertDismissed,         // callback
+						'Berhasil!! '+e.regid,            // title
+						'Done'                  // buttonName
+					);
 				}
 				break;
 			case 'message':

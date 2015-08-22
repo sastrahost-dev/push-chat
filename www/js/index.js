@@ -180,7 +180,7 @@ $(document)
 })
 .ready(function()
 {
-	
+	$('<audio id="chatAudio"><source src="js/alert.mp3" type="audio/mpeg"></audio>').appendTo('body');
 	var messagesRef = new Firebase('https://sizzling-fire-2271.firebaseio.com/');
 	$('#clearMsg').on('click',function (e) {	
 		var ok = confirm("Yakin dihapus?");
@@ -248,11 +248,12 @@ $(document)
     })
 	 // Add a callback that is triggered for each chat message.
 	messagesRef.on('child_added', function (snapshot) {
-		 $("#messageInput").focus();
+		$("#messageInput").focus();
 		var message = snapshot.val();
 		if(message.name === getCookie('name')){
 			var green = 'bubble--alt';
 		}else{
+			$('#chatAudio')[0].play();
 			var green = '';
 		}
 		if($.trim(message.image).length>0){
@@ -263,6 +264,7 @@ $(document)
 		makecokies('idLawan',message.idlawan);
 		var resultMSG = '<p class="bubble '+green+'"><span style="color:#3617FF">'+message.name+' :</span> '+message.text+'<br /><img id="PopupShow" class="'+hide+'" src="'+message.image+'" style="width:100px;height:100px;"></p>';
 		$('#messagesDiv').append(resultMSG).animate({scrollTop: $(document).height()},"slow");	
+		$("html, body").animate({ scrollTop: $(document).height() }, 1000);
 	})
 	$(window).load(function() {
 	  $("html, body").animate({ scrollTop: $(document).height() }, 1000);

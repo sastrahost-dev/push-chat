@@ -57,31 +57,19 @@ var app = {
 		alert(error);
 	},
 	onNotificationGCM: function(e) {
-		alert("In the onNotificationGCM " + e.event);
+		//alert("In the onNotificationGCM " + e.event);
 		switch( e.event )
 		{
 			case 'registered':
 				if ( e.regid.length > 0 )
 				{
 					localStorage.setItem('regid',e.regid);
-					navigator.notification.alert(
-						'You are the winner!',  // message
-						alertDismissed,         // callback
-						'Berhasil!! '+e.regid,            // title
-						'Done'                  // buttonName
-					);
+					alert('Berhasil '+e.regid);
 				}
 				break;
 			case 'message':
 				// this is the actual push notification. its format depends on the data model from the push server
 				alert('message = '+e.message+' Dari = '+e.msgcnt);
-					navigator.notification.alert(
-						'You are the winner!',  // message
-						alertDismissed,         // callback
-						'Game Over',            // title
-						'Done'                  // buttonName
-					);
-
 				break;
 
 			case 'error':

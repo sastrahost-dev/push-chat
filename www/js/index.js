@@ -39,20 +39,12 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 		//alert('receivedEvent '+device.platform);
-		if(PushbotsPlugin.isAndroid()){
-			PushbotsPlugin.initializeAndroid("55d73997177959a41f8b4569", "854409438626");
-		}
-		function myMsgClickHandler(msg){
-			console.log("Clicked On notification" + JSON.stringify(msg));
-			alert(JSON.stringify(msg));
-		}
-		PushbotsPlugin.onNotificationClick(myMsgClickHandler);
 		var pushNotification = window.plugins.pushNotification;
 		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"854409438626","ecb":"app.onNotificationGCM"});		
     },
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {
-		alert('Tunggu hingga ada pemberitahuan berhasil = '+result)
+		alert('Tunggu hingga ada pemberitahuan berhasil '+result)
 	},
 	errorHandler:function(error) {
 		alert(error);
@@ -149,18 +141,39 @@ var app = {
 			reloadPage:false			
 		});			
 	}
-	
 (function($){
 $(document)
-// Login	
-/* .on('submit', '#register' ,function(e) {
-}) 
-.on('pageinit', function () { 
-
+.on('click','#changename',function(e){
+	delcokies('name');
+	pindahPage('#index');
 })
-*/
+.on('click','#PopupShow',function(e){
+	var img = $(this).attr('src');
+	$('#showimagepopup').attr( "src", img);
+	$( "#imagePopup" ).popup( "open" );
+})
+.on('pageinit', function () { 
+	// variable session	
+	function isLoged(){
+	var name = getCookie('name');
+		if($.trim(name).length > 0){
+			//alert(name);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	$('[data-role=page]').on('pageshow', function (event, ui) {
+		var pageAct = $('body').pagecontainer( 'getActivePage' ).attr( 'id' );
+		if(isLoged() && pageAct === 'index'){
+			alert('Loged In');
+			pindahPage('#chat');
+		}
+	})
+})
 .ready(function()
 {
+	
 	var messagesRef = new Firebase('https://sizzling-fire-2271.firebaseio.com/');
 	$('#clearMsg').on('click',function (e) {	
 		var ok = confirm("Yakin dihapus?");
@@ -172,30 +185,54 @@ $(document)
 	$('#getregid').on('click',function (e) {	
 		alert(getCookie('regid'));
 	})
+	
+	function readImage(input) {
+		if ( input.files && input.files[0] ) {
+			var FR= new FileReader();
+			FR.onload = function(e) {
+				makecokies('messageImg',e.target.result);
+			};       
+			FR.readAsDataURL( input.files[0] );
+		}
+	}
+	$("#messageImg").change(function(){
+		var img =  readImage( this );
+	});
 	$('#sendMsg').on('click',function (e) {		
 		if($.trim($('#messageInput').val()).length>0){
 			var name = getCookie('name');
 			var text = $('#messageInput').val();
-			messagesRef.push({name:name, text:text});
+			var image = getCookie('messageImg');
+			if(image != 'undefined'){
+				messagesRef.push({name:name, text:text,idlawan:idLawan,image:image});
+			}else{
+				messagesRef.push({name:name, text:text,idlawan:idLawan});
+			}
+			delcokies('messageImg');
 			$('#messageInput').val('');	
-			$('html, body').animate({ 
+			$('html, body, #messagesDiv').animate({ 
 			   scrollTop: $(document).height()-$(window).height()}, 
-			   500
+			   250
 			);
 			pushNotif(getCookie('regid'),name,text);
 		}
     })
-	
 	$('#messageInput').keypress(function (e) {
 		if(e.which == 13 && $.trim($('#messageInput').val()).length>0){
 			var name = getCookie('name');
 			var text = $('#messageInput').val();
 			var idLawan = getCookie('idLawan');
-			messagesRef.push({name:name, text:text,idlawan:idLawan});
+			var image = getCookie('messageImg');
+			if(image != 'undefined'){
+				messagesRef.push({name:name, text:text,idlawan:idLawan,image:image});
+			}else{
+				messagesRef.push({name:name, text:text,idlawan:idLawan});
+			}
+			delcokies('messageImg');
 			$('#messageInput').val('');	
 			$('html, body').animate({ 
 			   scrollTop: $(document).height()-$(window).height()}, 
-			   500
+			   250
 			);			
 			pushNotif(getCookie('regid'),name,text);
 			return false;
@@ -210,11 +247,18 @@ $(document)
 		}else{
 			var green = '';
 		}
+		if($.trim(message.image).length>0){
+			var hide = '';
+		}else{
+			var hide = 'none';
+		}
 		makecokies('idLawan',message.idlawan);
-		var resultMSG = '<p class="bubble '+green+'">'+message.text+'</p>';
-		$('#messagesDiv').append(resultMSG).animate({scrollTop: $(document).height()},"slow");	 
+		var resultMSG = '<p class="bubble '+green+'"><span style="color:#3617FF">'+message.name+' :</span> '+message.text+'<br /><img id="PopupShow" class="'+hide+'" src="'+message.image+'" style="width:100px;height:100px;"></p>';
+		$('#messagesDiv').append(resultMSG).animate({scrollTop: $(document).height()},"slow");	
 	})
-  
+	$(window).load(function() {
+	  $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+	});
 	$('#registerName').click(function(e){
 		e.stopPropagation();
 		e.preventDefault();

@@ -16,7 +16,7 @@
 				app.initialize();
 			</script>
 
-		<title>Palm</title>
+		<title>Chat SastraHost</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scaleable=no">
     </head>
     <body id="login-view">
@@ -52,20 +52,28 @@
 		<div data-role="page" id="chat">
 		  <div data-role="header" id="header">
 			<div class="header text-center">
-				<h4><a href="#index" class="changename" >Ganti Nama</a>
-				Chat <a id="clearMsg" class="clearmsg" >Clear Chat</a></h4>
+				<h4><a href="#" id="changename" class="changename" >Ganti Nama</a>
+				Chat SastraHost<a id="clearMsg" class="clearmsg" >Clear Chat</a></h4>
 			</div>
 		  </div>
 		  <br />
 		  <div data-role="content" class="ui-content" id="confirmation-area">
 				<div id='messagesDiv' class="lastChat"></div>
-				<br />
 		  </div>
-		  
+			<div data-role="popup" id="imagePopup">
+			  <a href="#chat" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
+			  <img id="showimagepopup" src="skaret.jpg" style="width:800px;height:400px;" alt="Skaret View">
+			</div>
 		  <div class="footer" data-role="footer" id="footer" data-position="fixed" data-tap-toggle="true">
+			<div class="btn-group btn-group-justified" role="group" aria-label="...">
+			<div class="fileUpload btn btn-primary" style="width:10%;">
+				<span>img</span>
+				<input type="file" class="upload" id="messageImg" data-role="none" />
+			</div>
 			<div class="input-group">
 			  	<input type='text' id='messageInput' data-role="none" class="width100" placeholder='Message...' >
 				<span class="input-group-addon" id="sendMsg">Send</span>
+			</div>
 			</div>
 		  </div>
 		</div> 

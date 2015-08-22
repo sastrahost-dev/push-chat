@@ -201,6 +201,7 @@ $(document)
 		if($.trim($('#messageInput').val()).length>0){
 			var name = getCookie('name');
 			var text = $('#messageInput').val();
+			var idLawan = getCookie('idLawan');
 			var image = getCookie('messageImg');
 			if(image != 'undefined'){
 				messagesRef.push({name:name, text:text,idlawan:idLawan,image:image});

@@ -62,6 +62,13 @@ var app = {
 			case 'message':
 				// this is the actual push notification. its format depends on the data model from the push server
 				alert('message = '+e.message+' Dari = '+e.msgcnt);
+					navigator.notification.alert(
+						'You are the winner!',  // message
+						alertDismissed,         // callback
+						'Game Over',            // title
+						'Done'                  // buttonName
+					);
+
 				break;
 
 			case 'error':

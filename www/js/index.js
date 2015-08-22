@@ -180,7 +180,7 @@ $(document)
 })
 .ready(function()
 {
-	$('<audio id="chatAudio"><source src="js/alert.mp3" type="audio/mpeg"></audio>').appendTo('body');
+	$('<audio id="chatAudio"><source src="http://api.dicoba.net/media/alert.mp3" type="audio/mpeg"></audio>').appendTo('body');
 	var messagesRef = new Firebase('https://sizzling-fire-2271.firebaseio.com/');
 	$('#clearMsg').on('click',function (e) {	
 		var ok = confirm("Yakin dihapus?");
@@ -247,6 +247,12 @@ $(document)
 		}
     })
 	 // Add a callback that is triggered for each chat message.
+	 
+	function getPhoneGapPath() {
+		var path = window.location.pathname;
+		path = path.substr( path, path.length - 10 );
+		return 'file://' + path;
+	}
 	messagesRef.on('child_added', function (snapshot) {
 		$("#messageInput").focus();
 		var message = snapshot.val();

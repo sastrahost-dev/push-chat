@@ -3,8 +3,8 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.mjniuz.pushchat"
-        version   = "1.1.0">
+        id        = "com.sastrahost.pushchat"
+        version   = "1.0.0">
 
     <name>Push Chat</name>
 
@@ -12,7 +12,7 @@
 		push testing sastrahost
     </description>
 
-    <author href="http://phonegap.com" email="support@phonegap.com">
+    <author href="http://sastrahost.com" email="admin@sastrahost.com">
         SastraHost
     </author>
 

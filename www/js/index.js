@@ -34,13 +34,12 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-		//var pushNotification = window.plugins.pushNotification;
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 		//alert('receivedEvent '+device.platform);
 		var pushNotification = window.plugins.pushNotification;
-		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"854409438626","ecb":"app.onNotificationGCM"});		
+		pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"1094004461627","ecb":"app.onNotificationGCM"});		
     },
 	// result contains any message sent from the plugin call
 	successHandler: function(result) {

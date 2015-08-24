@@ -12,6 +12,8 @@ Silahkan edit di js/index.js <= file main untuk semua konfigurasi JS.
 	pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"isi_sender_id","ecb":"app.onNotificationGCM"});	
 	Silahkan aktifkan sender ID dengan cara signup di google developer dan aktifkan (enable) API GCM pada dashboard.
 	
+### Tutorial lengkap di http://www.sastrahost.com
+
 ### Build dengan phonegap build, http://build.phonegap.com
 
 [phonegap-cli-url]: http://github.com/phonegap/phonegap-cli

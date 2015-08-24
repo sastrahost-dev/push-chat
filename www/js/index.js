@@ -16,6 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ /*
+ Lisensi Non-commercial use
+ Admin@sastrahost.com
+ www.sastrahost.com
+ */
+ // Setting URL Backend anda disini
+var rootUrl = 'http://api.dicoba.net/api/';
 var app = {
     // Application Constructor
     initialize: function() {
@@ -82,9 +89,8 @@ var app = {
 		}
 	}
 };
-// notif event
+	// Daftarkan token ke database
 	function registerID(id,name){
-		var rootUrl = 'http://api.dicoba.net/api/';
 		var origin = rootUrl + 'example/uuidReg';
 		var regid = getCookie('regid');
 		var dataString = 'name='+name+'&regid='+regid;
@@ -106,8 +112,9 @@ var app = {
 		  }
 		});
 	}
+	
+	// Fungsi push notification
 	function pushNotif(id,name,msg){
-		var rootUrl = 'http://api.dicoba.net/api/';
 		var origin = rootUrl + 'example/push';
 		var dataString = 'id='+id+'&name='+name+'&msg='+msg;
 		$.ajax({

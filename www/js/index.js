@@ -23,6 +23,9 @@
  */
  // Setting URL Backend anda disini
 var rootUrl = 'http://api.dicoba.net/api/';
+
+// Firebase URL anda
+var firebaseURL = 'https://sizzling-fire-2271.firebaseio.com/';
 var app = {
     // Application Constructor
     initialize: function() {
@@ -188,7 +191,7 @@ $(document)
 .ready(function()
 {
 	$('<audio id="chatAudio"><source src="http://api.dicoba.net/media/alert.mp3" type="audio/mpeg"></audio>').appendTo('body');
-	var messagesRef = new Firebase('https://sizzling-fire-2271.firebaseio.com/');
+	var messagesRef = new Firebase(firebaseURL);
 	$('#clearMsg').on('click',function (e) {	
 		var ok = confirm("Yakin dihapus?");
 		if(ok == true){			

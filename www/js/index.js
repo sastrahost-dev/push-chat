@@ -94,7 +94,7 @@ var app = {
 };
 	// Daftarkan token ke database
 	function registerID(id,name){
-		var origin = rootUrl + 'example/uuidReg';
+		var origin = rootUrl + 'example/uuidReg'; // URL target API daftar token
 		var regid = getCookie('regid');
 		var dataString = 'name='+name+'&regid='+regid;
 		$.ajax({
@@ -118,7 +118,7 @@ var app = {
 	
 	// Fungsi push notification
 	function pushNotif(id,name,msg){
-		var origin = rootUrl + 'example/push';
+		var origin = rootUrl + 'example/push'; // URL target API push notif
 		var dataString = 'id='+id+'&name='+name+'&msg='+msg;
 		$.ajax({
 			type: "POST",
